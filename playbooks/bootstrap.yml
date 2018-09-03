@@ -273,6 +273,15 @@
         state: present
       become: true
 
+- hosts: rpi_k8s
+  any_errors_fatal: true
+  tasks:
+    - name: Installing nfs-common
+      apt:
+        name: nfs-common
+        state: present
+      become: true
+
 # We install dnsutils to provide us dig on the cluster nodes
     - name: Installing dnsutils
       apt:

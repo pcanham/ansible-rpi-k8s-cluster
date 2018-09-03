@@ -1,0 +1,10 @@
+---
+- hosts: rpi_k8s_slaves
+  serial: 1
+  tasks:
+    - name: Shutting down Hosts
+      shell: sleep 2 && shutdown -h now "shutting down"
+      async: 1
+      poll: 0
+      ignore_errors: true
+      become: true

@@ -1,0 +1,5 @@
+---
+- name: Shutdown Slaves
+  import_playbook: shutdown-slaves.yml
+- name: Shutdown Master 
+  import_playbook: shutdown-master.yml

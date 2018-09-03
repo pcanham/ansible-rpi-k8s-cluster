@@ -6,7 +6,7 @@ dhcp_dns_servers:
   # - 8.8.4.4
 
 # Defines DHCP scope end address
-dhcp_scope_end_range: "{{ dhcp_scope_subnet }}.131"
+dhcp_scope_end_range: "{{ dhcp_scope_subnet }}.130"
 
 # Defines DHCP scope gateway address
 dhcp_scope_gateway: "{{ hostvars[groups['rpi_k8s_master'][0]]['rpi_k8_static_ip_addr'] }}"
@@ -21,7 +21,7 @@ dhcp_scope_start_range: "{{ dhcp_scope_subnet }}.128"
 dhcp_scope_subnet: 192.168.100
 
 # Defines jumphost IP address to use as bastion host to reach isolated hosts
-jumphost_ip: 172.16.24.186
+jumphost_ip: 192.168.3.91
 
 # Defines IPTABLES rules to define on jumphost
 jumphost_iptables_rules:
@@ -54,14 +54,14 @@ k8s_glusterfs_namespaces:
   - kube-system
 
 # Defines primary dns domain name for isolated network
-pri_domain_name: etsbv.internal
+pri_domain_name: kube.internal
 
 # Defines if GlusterFS should be used for persistent storage capabilities
 rpi_k8s_use_glusterfs: true
 
 # Defines the number of nodes in cluster
 # Extremely important to define correctly, otherwise provisioning will fail.
-rpi_nodes: 5
+rpi_nodes: 4
 
 # Defines the default rpi password for the rpi_username...default is raspberry
 rpi_password: raspberry

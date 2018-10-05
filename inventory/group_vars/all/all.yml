@@ -21,7 +21,7 @@ dhcp_scope_start_range: "{{ dhcp_scope_subnet }}.128"
 dhcp_scope_subnet: 192.168.100
 
 # Defines jumphost IP address to use as bastion host to reach isolated hosts
-jumphost_ip: 192.168.3.91
+jumphost_ip: 192.168.3.95
 
 # Defines IPTABLES rules to define on jumphost
 jumphost_iptables_rules:

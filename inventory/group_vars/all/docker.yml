@@ -1,3 +1,5 @@
 ---
 docker_swarm_interface: "{{ rpi_wired_int }}"
-docker_version: 17.09.0
+docker_version: '18.06.1~ce~3-0~raspbian'
+docker_users:
+  - 'pi'

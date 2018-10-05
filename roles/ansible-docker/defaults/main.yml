@@ -173,4 +173,4 @@ docker_users: []
 # 17.03.0|17.03.1|17.03.2|17.04.0|17.05.0|17.06.0
 # Currently as of 06/03/2017 17.04.0 and 17.05.0 must be installed from the
 # edge channel. Change docker_release_channel: 'edge'
-docker_version: 17.06.0
+docker_version: 18.06.1

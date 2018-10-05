@@ -1,12 +1,13 @@
 ---
 - name: debian | Installing Pre-Reqs
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
-  become: true
-  with_items:
+  vars:
+    packages:
     - apt-transport-https
     - jq
+  become: true
 
 - name: debian | Adding K8s Repo Key
   apt_key:
@@ -35,7 +36,6 @@
 
 - name: debian | Installing K8s Packages
   apt:
-    name: "{{ item }}"
+    name: "{{ k8s_debian_packages }}"
     state: present
   become: true
-  with_items: "{{ k8s_debian_packages }}"

@@ -1,30 +1,33 @@
 ---
 - name: config_lvm | installing packages
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
-  with_items:
-     - lvm2
-     - scsitools
-     - xfsprogs
+  vars:
+    packages:
+    - lvm2
+    - scsitools
+    - xfsprogs    
   when: ansible_os_family == "Debian"
 
 - name: config_lvm | installing lvm2
   yum:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
-  with_items:
+  vars:
+    packages:
     - sg3_utils
-    - system-storage-manager
+    - system-storage-manager    
   when: >
         ansible_os_family == "RedHat" and
         ansible_distribution != "Fedora"
 
 - name: config_lvm | installing lvm2
   dnf:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
-  with_items:
+  vars:
+    packages:
     - sg3_utils
     - system-storage-manager
   when: >

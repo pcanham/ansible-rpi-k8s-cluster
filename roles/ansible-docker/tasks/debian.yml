@@ -7,13 +7,14 @@
 
 - name: debian | installing pre-reqs
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: present
+  vars:
+    packages:
+    - apt-transport-https
+    - ca-certificates
+    - software-properties-common    
   become: true
-  with_items:
-    - 'apt-transport-https'
-    - 'ca-certificates'
-    - 'software-properties-common'
 
 # We are removing the old Docker info
 - name: debian | Removing Legacy Docker apt-key
@@ -47,13 +48,14 @@
 # docker-ce
 - name: debian | uninstalling old docker package (if exists)
   apt:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: "absent"
     purge: yes
+  vars:
+    packages:
+    - docker-engine
+    - lxc-docker    
   become: true
-  with_items:
-    - 'docker-engine'
-    - 'lxc-docker'
 
 - name: debian | installing docker pre-reqs
   apt:
@@ -88,8 +90,6 @@
 
 - name: debian | installing additonal packages
   apt:
-    name: "{{ item }}"
+    name: "bridge-utils"
     state: "present"
   become: true
-  with_items:
-    - bridge-utils

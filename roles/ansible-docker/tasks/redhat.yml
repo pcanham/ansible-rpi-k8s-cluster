@@ -1,39 +1,42 @@
 ---
 - name: redhat | Installing Pre-Reqs (Fedora)
   dnf:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: "present"
-  become: true
-  with_items:
+  vars:
+    packages:
     - 'device-mapper-persistent-data'
     - 'libselinux-python'
     - 'lvm2'
     - 'yum-utils'
+  become: true  
   when: ansible_distribution == "Fedora"
 
 - name: redhat | Installing Pre-Reqs (!=Fedora)
   yum:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: "present"
-  become: true
-  with_items:
+  vars:
+    packages:
     - 'device-mapper-persistent-data'
     - 'libselinux-python'
     - 'lvm2'
     - 'yum-utils'
+  become: true
   when: ansible_distribution != "Fedora"
 
 - name: redhat | Uninstalling Old Docker Package (if exists)
   yum:
-    name: "{{ item }}"
+    name: "{{ packages }}"
     state: "absent"
-  become: true
-  with_items:
+  vars:
+    packages:
     - 'container-selinux'
     - 'docker-common'
     - 'docker-engine'
     - 'docker-selinux'
     - 'docker'
+  become: true
 
 - name: redhat | adding Docker repo
   template:

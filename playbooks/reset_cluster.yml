@@ -5,6 +5,67 @@
       command: kubeadm reset --force
       become: true
 
+    - name: Stop kubelet service
+      service:
+        name: kubelet
+        state: stopped
+      become: true
+
+    - name: stop all docker containers
+      shell: docker ps -a -q | xargs --no-run-if-empty docker stop
+      ignore_errors: true
+      become: true
+
+    - name: remove all docker containers
+      shell: docker ps -a -q | xargs --no-run-if-empty docker rm
+      ignore_errors: true
+      become: true
+
+    - name: remove all docker images
+      shell: docker images -q | xargs --no-run-if-empty docker rmi 
+      become: true
+
+    - name: clean unused docker containers
+      shell: docker ps -a -q -f status=exited | xargs --no-run-if-empty docker rm -v
+      become: true
+
+    - name: clean unused docker images
+      shell: docker images -f “dangling=true” -q | xargs --no-run-if-empty docker rmi
+      become: true
+
+    - name: Stop Docker service
+      service:
+        name: docker
+        state: stopped
+      become: true
+
+    - name: Docker - Cleanup images
+      file: 
+        path: /var/lib/docker
+        #recurse: yes
+        state: absent
+      become: true
+
+    - name: debian | uninstalling docker package (if exists)
+      apt:
+        name: "docker"
+        state: "absent"
+        purge: yes
+      become: true
+
+    - name: debian | Installing K8s Packages
+      apt:
+        name: "{{ packages }}"
+        state: "absent"
+        purge: yes
+      vars:
+        packages:
+        - kubelet
+        - kubeadm
+        - kubectl
+        - kubernetes-cni 
+      become: true
+
     - name: Ensuring All Default IPTABLES Chains Are Set To ACCEPT
       iptables:
         chain: "{{ item }}"
@@ -27,6 +88,73 @@
   tasks:
     - name: Resetting K8s Master
       command: kubeadm reset --force
+      become: true
+
+    - name: Stop kubelet service
+      service:
+        name: kubelet
+        state: stopped
+      become: true
+
+    - name: stop all docker containers
+      shell: docker ps -a -q | xargs --no-run-if-empty docker stop
+      ignore_errors: true
+      become: true
+
+    - name: remove all docker containers
+      shell: docker ps -a -q | xargs --no-run-if-empty docker rm
+      ignore_errors: true
+      become: true
+
+    - name: remove all docker images
+      shell: docker images -q | xargs --no-run-if-empty docker rmi 
+      become: true
+
+    - name: clean unused docker containers
+      shell: docker ps -a -q -f status=exited | xargs --no-run-if-empty docker rm -v
+      become: true
+
+    - name: clean unused docker images
+      shell: docker images -f “dangling=true” -q | xargs --no-run-if-empty docker rmi
+      become: true
+
+    - name: Stop Docker service
+      service:
+        name: docker
+        state: stopped
+      become: true
+
+    - name: Docker - Cleanup images
+      file: 
+        path: /var/lib/docker
+        #recurse: yes
+        state: absent
+      become: true
+
+    - name: debian | uninstalling docker package (if exists)
+      apt:
+        name: "docker"
+        state: "absent"
+        purge: yes
+      become: true
+
+    - name: debian | Installing K8s Packages
+      apt:
+        name: "{{ packages }}"
+        state: "absent"
+        purge: yes
+      vars:
+        packages:
+        - kubelet
+        - kubeadm
+        - kubectl
+        - kubernetes-cni 
+      become: true
+
+    - name: Remove helm binary
+      file: 
+        path=/usr/local/bin/helm
+        state=absent
       become: true
 
     - name: Ensuring All Default IPTABLES Chains Are Set To ACCEPT

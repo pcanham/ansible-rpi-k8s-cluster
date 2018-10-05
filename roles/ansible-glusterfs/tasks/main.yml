@@ -10,9 +10,6 @@
 - include: debian.yml
   when: ansible_os_family == "Debian"
 
-- include: redhat.yml
-  when: ansible_os_family == "RedHat"
-
 - include: config_glusterfs_server.yml
   when: >
         inventory_hostname in groups[glusterfs_server_group] and

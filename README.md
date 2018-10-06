@@ -757,7 +757,7 @@ architecture we need to make some adjustments post deployment.
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-kubectl set image deploy/tiller-deploy tiller=luxas/tiller:v2.6.1 --namespace kube-system
+kubectl set image deploy/tiller-deploy tiller=jessestuart/tiller:v2.9.1-arm --namespace kube-system
 ```
 
 ## Persistent Storage
